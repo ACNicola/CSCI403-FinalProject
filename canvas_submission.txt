@@ -16,4 +16,31 @@ We thought this dataset was interesting because it has the potential to give an 
 relevant to us. The dataset is also fairly simple to understand, since most people know what the crimes within our dataset are, so clarifying the significance of our data
 will be made more simple without having to give very long-winded explanations in our final report.
 
+Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
+
+Columns Descriptions: 
+    objectid:
+    incident_id:
+    offense_id:
+    offense_code:
+    offense_code_extension:
+    offense_type_id:
+    offense_category_id:
+    first_occurrence_date:
+    last_occurrence_date:
+    reported_date:
+    incident_address: The address of where the crime occurred
+    geo_x:
+    geo_y:
+    geo_lon: The longitudinal location of where the crime occurred
+    geo_lat: The latitudinal location of where the crime occurred
+    district_id:
+    precinct_id:
+    neighborhood_id:
+    is_crime:
+    is_traffic:
+    victim_count: The number of victims of the crime
+    x:
+    y:
+
 3. Analysis
