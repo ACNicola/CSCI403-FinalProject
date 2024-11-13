@@ -43,4 +43,36 @@ Columns Descriptions:
     x:
     y:
 
+First 10 Rows (with some columns omitted for better readability):
+
+ objectid | offense_code |     offense_type_id     | reported_date |     incident_address      | victim_count
+----------+--------------+-------------------------+---------------+---------------------------+--------------
+        1 | 2999         | criminal-mischief-other | 2020-07-28    | 15987 E RANDOLPH PL       |            1
+        2 | 2999         | criminal-mischief-other | 2020-10-14    | 6980 E GIRARD AVE         |            1
+        3 | 2999         | criminal-mischief-other | 2022-01-08    | 3145 W ARKANSAS AVE       |            1
+        4 | 2999         | criminal-mischief-other | 2021-03-20    | 2300 BLOCK N FEDERAL BLVD |            1
+        5 | 2999         | criminal-mischief-other | 2020-08-04    | 900 BLK 10TH ST           |            1
+        6 | 2999         | criminal-mischief-other | 2022-03-08    | 7400 E HAMPDEN AVE        |            1
+        7 | 2999         | criminal-mischief-other | 2020-11-18    | 677 S FEDERAL BLVD        |            1
+        8 | 2999         | criminal-mischief-other | 2021-06-03    | 1029 E 8TH AVE            |            1
+        9 | 2999         | criminal-mischief-other | 2021-04-03    | 3155 W TANFORAN DR        |            1
+       10 | 2999         | criminal-mischief-other | 2020-06-26    | 1528 BLAKE ST             |            1
+
+
+First 10 Rows (all columns):
+
+ objectid | incident_id |      offense_id      | offense_code | offense_code_extension |     offense_type_id     | offense_category_id | first_occurrence_date | last_occurrence_date | reported_date |     incident_address      | geo_x | geo_y |    geo_lon    |   geo_lat   | district_id | precinct_id |      neighborhood_id       | is_crime | is_traffic | victim_count |        x         |        y
+----------+-------------+----------------------+--------------+------------------------+-------------------------+---------------------+-----------------------+----------------------+---------------+---------------------------+-------+-------+---------------+-------------+-------------+-------------+----------------------------+----------+------------+--------------+------------------+------------------
+        1 |  2020454617 |  2.0204546172999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-07-26            |                      | 2020-07-28    | 15987 E RANDOLPH PL       |     0 |     0 | -104.80111124 |  39.7978271 | 5           | 522         | gateway-green-valley-ranch | t        | f          |            1 | 3196378.99986042 | 1716244.99992036
+        2 | 20206013877 | 2.02060138772999e+16 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-10-10            | 2020-10-10           | 2020-10-14    | 6980 E GIRARD AVE         |     0 |     0 | -104.90580731 | 39.65477351 | 3           | 323         | hampden                    | t        | f          |            1 | 3167302.00037619 | 1663927.00013023
+        3 |   202210816 |      202210816299900 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2022-01-08            |                      | 2022-01-08    | 3145 W ARKANSAS AVE       |     0 |     0 | -105.02761446 | 39.69178415 | 4           | 421         | mar-lee                    | t        | f          |            1 | 3132935.99996522 | 1677206.99998163
+        4 |  2021159354 |  2.0211593542999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-03-20            |                      | 2021-03-20    | 2300 BLOCK N FEDERAL BLVD |     0 |     0 | -105.02501891 | 39.75133528 | 1           | 121         | jefferson-park             | t        | f          |            1 | 3133552.99970441 | 1698903.00015162
+        5 |  2020470873 |  2.0204708732999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-08-04            |                      | 2020-08-04    | 900 BLK 10TH ST           |     0 |     0 | -105.00196517 | 39.74086016 | 1           | 123         | auraria                    | t        | f          |            1 | 3140056.00010125 | 1695122.00018774
+        6 |  2022114995 |  2.0221149952999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2022-03-08            | 2022-03-07           | 2022-03-08    | 7400 E HAMPDEN AVE        |     0 |     0 | -104.90178692 | 39.65226032 | 3           | 324         | hampden-south              | t        | f          |            1 | 3168439.99961706 | 1663019.00000176
+        7 |  2020679699 |  2.0206796992999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-11-18            | 2020-11-18           | 2020-11-18    | 677 S FEDERAL BLVD        |     0 |     0 | -105.02548663 | 39.70429142 | 4           | 412         | westwood                   | t        | f          |            1 | 3133510.99997416 | 1681765.99988654
+        8 |  2021312037 |  2.0213120372999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-05-25            | 2021-05-29           | 2021-06-03    | 1029 E 8TH AVE            |     0 |     0 | -104.97431186 | 39.72923992 | 6           | 623         | capitol-hill               | t        | f          |            1 | 3147856.99945307 | 1690933.00064945
+        9 |  2021187502 |  2.0211875022999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-04-02            |                      | 2021-04-03    | 3155 W TANFORAN DR        |     0 |     0 | -105.02816345 | 39.63020843 | 4           | 423         | fort-logan                 | t        | f          |            1 | 3132897.99999274 | 1654777.00015192
+       10 | 20206007855 | 2.02060078552999e+16 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-06-26            | 2020-06-26           | 2020-06-26    | 1528 BLAKE ST             |     0 |     0 | -104.99991312 | 39.74986963 | 6           | 612         | union-station              | t        | f          |            1 | 3140615.00009964 | 1698407.00006718
+
+
 3. Analysis
