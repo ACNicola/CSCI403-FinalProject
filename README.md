@@ -66,4 +66,4 @@ Sub your drive, <user>, path, and file name to this
 
 You should see an ouput: `COPY 396535`
 
-Further verify it worked by running \d incident and SELECT * FROM incident WHERE objectid < 5;
+Further verify it worked by running `\d incident` and `SELECT TOP 10 * FROM incident`;
