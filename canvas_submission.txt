@@ -6,7 +6,7 @@ Group Members:
 Thomas McInnes (10901477),
 Thomas Dowd (CWID),
 Andrew Nicola (CWID),
-Dmitry Weakly (CWID),
+Dmitry Weakly (10915244),
 Hannah Clark (CWID)
 
 2. Dataset
