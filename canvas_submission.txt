@@ -4,7 +4,7 @@ Group Name: <insert group name here>
 
 Group Members: 
 Thomas McInnes (10901477),
-Thomas Dowd (CWID),
+Thomas Dowd (10900152),
 Andrew Nicola (CWID),
 Dmitry Weakly (10915244),
 Hannah Clark (CWID)
@@ -76,3 +76,11 @@ First 10 Rows (all columns):
 
 
 3. Analysis
+
+Analysis Question 1:
+"Does crime seem to correlate with geolocation?"
+SQL Query of Note:
+	
+
+This above output associates offense_id with various saved geolocation data. By filtering the table to more accurately represent number of crimes
+commited in a given lattitude and Logitude. 
