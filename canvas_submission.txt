@@ -1,0 +1,19 @@
+1. Team Name & Members
+
+Group Name: <insert group name here>
+
+Group Members: 
+Thomas McInnes (10901477),
+Thomas Dowd (CWID),
+Andrew Nicola (CWID),
+Dmitry Weakly (CWID),
+Hannah Clark (CWID)
+
+2. Dataset
+
+For our dataset, we selected a collection of crime that has occurred in Denver, from disturbing the peace to motor vehicle theft.
+We thought this dataset was interesting because it has the potential to give an insightful look into the crime and safety of a very local area, making it
+relevant to us. The dataset is also fairly simple to understand, since most people know what the crimes within our dataset are, so clarifying the significance of our data
+will be made more simple without having to give very long-winded explanations in our final report.
+
+3. Analysis
