@@ -78,9 +78,12 @@ First 10 Rows (all columns):
 3. Analysis
 
 Analysis Question 1:
-"Does crime seem to correlate with geolocation?"
+    "What Neigborhood(s) are associated with the highest proprtion for non-buisness related robberies"
 SQL Query of Note:
-	
+	Filter all non residential locaitons
+    offense_type_id: (We want):
+        burglary-residence-*
+        robbery-street-*
+        robbery-residence
+        burglary-other
 
-This above output associates offense_id with various saved geolocation data. By filtering the table to more accurately represent number of crimes
-commited in a given lattitude and Logitude. 
