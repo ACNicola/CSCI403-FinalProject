@@ -130,3 +130,40 @@ Relavent Output + Explanation:
 
 The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise)burglaries historically, This is the
 historical frequency of burglaries. This data can be used to interpret the proprtion and other stats if needed as well.
+
+
+Analysis Question 2:
+    "What are the proprtions of Each Crime?"
+
+Relavent Query:
+
+SELECT offense_type_id, COUNT(offense_type_id) * 1.0 / (SELECT COUNT(*) FROM incident) 
+    AS proportion 
+    FROM incident 
+    GROUP BY offense_type_id 
+    ORDER BY proportion DESC
+    limit 15;
+
+Relavent Query Output:
+       offense_type_id        |       proportion
+------------------------------+------------------------
+ theft-of-motor-vehicle       | 0.15013302734941430139
+ theft-items-from-vehicle     | 0.10307539057081972588
+ criminal-mischief-mtr-veh    | 0.07027626817304903729
+ theft-parts-from-vehicle     | 0.06518214029026441550
+ theft-other                  | 0.06001740073385703658
+ criminal-mischief-other      | 0.04191307198607941291
+ criminal-trespassing         | 0.03705599757902833293
+ assault-simple               | 0.03692990530470198091
+ theft-shoplift               | 0.03450893363763602204
+ theft-bicycle                | 0.02396257581297993872
+ burglary-business-by-force   | 0.02337498581461913829
+ weapon-unlawful-discharge-of | 0.02161725951050979107
+ theft-from-bldg              | 0.02157186629175230434
+ burglary-residence-no-force  | 0.02155925706431966913
+ aggravated-assault           | 0.01826320501342882722
+(15 rows)
+
+On the above output from the Relavent Query we can see that compared to all reported Crime in Denver the
+proprtion of motor-vechile-theft is proportionally much larger than any other crime commited in the Denver
+reigion. 
