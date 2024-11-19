@@ -78,7 +78,7 @@ First 10 Rows (all columns):
 3. Analysis
 
 Analysis Question 1:
-    "What Neigborhood(s) are associated with the highest proprtion for non-buisness related robberies"
+    "What Neigborhood(s) are associated with the highest frequency for non-buisness related robberies"
 SQL Query of Note:
 
 CREATE TABLE relevant_crimes_rq1 AS
@@ -112,7 +112,7 @@ UNION ALL
     LIMIT 5
 );
 
-RELAVENT OUTPUT:
+Relavent Output + Explanation:
 
  neighborhood_id | total_crimes
 -----------------+--------------
@@ -128,5 +128,5 @@ RELAVENT OUTPUT:
  indian-creek    |           31
 (10 rows)
 
-
-
+The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise)burglaries historically, This is the
+historical frequency of burglaries. This data can be used to interpret the proprtion and other stats if needed as well.
