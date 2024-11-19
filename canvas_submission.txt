@@ -5,7 +5,7 @@ Group Name: <insert group name here>
 Group Members: 
 Thomas McInnes (10901477),
 Thomas Dowd (10900152),
-Andrew Nicola (CWID),
+Andrew Nicola (10899694),
 Dmitry Weakly (10915244),
 Hannah Clark (10875959)
 
