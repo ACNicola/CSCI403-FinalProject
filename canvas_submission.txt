@@ -80,10 +80,53 @@ First 10 Rows (all columns):
 Analysis Question 1:
     "What Neigborhood(s) are associated with the highest proprtion for non-buisness related robberies"
 SQL Query of Note:
-	Filter all non residential locaitons
-    offense_type_id: (We want):
-        burglary-residence-*
-        robbery-street-*
-        robbery-residence
-        burglary-other
+
+CREATE TABLE relevant_crimes_rq1 AS
+SELECT *
+FROM incident
+WHERE  
+      offense_type_id ILIKE 'burglary-residence-%' 
+   OR offense_type_id ILIKE 'robbery-street-%' 
+   OR offense_type_id ILIKE 'robbery-residence' 
+   OR offense_type_id ILIKE 'burglary-other'
+   AND neighborhood_id IS NOT NULL
+   AND neighborhood_id != '';
+
+( -- Top Burgaled Neigborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes DESC
+    LIMIT 5
+)
+UNION ALL
+( -- Bottom Burgaled Neighborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes ASC
+    LIMIT 5
+);
+
+RELAVENT OUTPUT:
+
+ neighborhood_id | total_crimes
+-----------------+--------------
+ five-points     |          848
+ central-park    |          664
+ capitol-hill    |          575
+ west-colfax     |          442
+ east-colfax     |          430
+                 |           10
+ auraria         |           16
+ wellshire       |           19
+ sun-valley      |           24
+ indian-creek    |           31
+(10 rows)
+
+
 

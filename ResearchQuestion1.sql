@@ -32,8 +32,8 @@ LIMIT 10;
     GROUP BY neighborhood_id
     ORDER BY total_crimes DESC
     LIMIT 5
-);
-
+)
+UNION ALL
 ( -- Bottom Burgaled Neighborhoods
     SELECT 
         neighborhood_id,
