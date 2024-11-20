@@ -19,29 +19,29 @@ will be made more simple without having to give very long-winded explanations in
 Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
 
 Columns Descriptions: 
-    objectid:
+    objectid: 
     incident_id:
     offense_id:
     offense_code:
     offense_code_extension:
-    offense_type_id:
-    offense_category_id:
+    offense_type_id: Specific descriptor for incident.
+    offense_category_id: General descriptor for incident. 
     first_occurrence_date:
     last_occurrence_date:
     reported_date:
     incident_address: The address of where the crime occurred
-    geo_x:
-    geo_y:
+    geo_x: Seeminly unused or depreciated X coordinate.
+    geo_y: Seeminly unused or depreciated Y coordinate.
     geo_lon: The longitudinal location of where the crime occurred
     geo_lat: The latitudinal location of where the crime occurred
     district_id:
     precinct_id:
-    neighborhood_id:
-    is_crime:
-    is_traffic:
+    neighborhood_id: The Identifyer for Neigborhood for the incident.
+    is_crime: A Boolean for if it is a crime or not.
+    is_traffic: A Boolean for if it is a traffic violation or not.
     victim_count: The number of victims of the crime
-    x:
-    y:
+    x: X-Coordniate for incident date.
+    y: Y-Coordniate for incident date.
 
 First 10 Rows (with some columns omitted for better readability):
 
@@ -78,9 +78,92 @@ First 10 Rows (all columns):
 3. Analysis
 
 Analysis Question 1:
-"Does crime seem to correlate with geolocation?"
+    "What Neigborhood(s) are associated with the highest frequency for non-buisness related robberies"
 SQL Query of Note:
-	
 
-This above output associates offense_id with various saved geolocation data. By filtering the table to more accurately represent number of crimes
-commited in a given lattitude and Logitude. 
+CREATE TABLE relevant_crimes_rq1 AS
+SELECT *
+FROM incident
+WHERE  
+      offense_type_id ILIKE 'burglary-residence-%' 
+   OR offense_type_id ILIKE 'robbery-street-%' 
+   OR offense_type_id ILIKE 'robbery-residence' 
+   OR offense_type_id ILIKE 'burglary-other'
+   AND neighborhood_id IS NOT NULL
+   AND neighborhood_id != '';
+
+( -- Top Burgaled Neigborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes DESC
+    LIMIT 5
+)
+UNION ALL
+( -- Bottom Burgaled Neighborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes ASC
+    LIMIT 5
+);
+
+Relavent Output + Explanation:
+
+ neighborhood_id | total_crimes
+-----------------+--------------
+ five-points     |          848
+ central-park    |          664
+ capitol-hill    |          575
+ west-colfax     |          442
+ east-colfax     |          430
+                 |           10
+ auraria         |           16
+ wellshire       |           19
+ sun-valley      |           24
+ indian-creek    |           31
+(10 rows)
+
+The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise)burglaries historically, This is the
+historical frequency of burglaries. This data can be used to interpret the proprtion and other stats if needed as well.
+
+
+Analysis Question 2:
+    "What are the proprtions of Each Crime?"
+
+Relavent Query:
+
+SELECT offense_type_id, COUNT(offense_type_id) * 1.0 / (SELECT COUNT(*) FROM incident) 
+    AS proportion 
+    FROM incident 
+    GROUP BY offense_type_id 
+    ORDER BY proportion DESC
+    limit 15;
+
+Relavent Query Output:
+       offense_type_id        |       proportion
+------------------------------+------------------------
+ theft-of-motor-vehicle       | 0.15013302734941430139
+ theft-items-from-vehicle     | 0.10307539057081972588
+ criminal-mischief-mtr-veh    | 0.07027626817304903729
+ theft-parts-from-vehicle     | 0.06518214029026441550
+ theft-other                  | 0.06001740073385703658
+ criminal-mischief-other      | 0.04191307198607941291
+ criminal-trespassing         | 0.03705599757902833293
+ assault-simple               | 0.03692990530470198091
+ theft-shoplift               | 0.03450893363763602204
+ theft-bicycle                | 0.02396257581297993872
+ burglary-business-by-force   | 0.02337498581461913829
+ weapon-unlawful-discharge-of | 0.02161725951050979107
+ theft-from-bldg              | 0.02157186629175230434
+ burglary-residence-no-force  | 0.02155925706431966913
+ aggravated-assault           | 0.01826320501342882722
+(15 rows)
+
+On the above output from the Relavent Query we can see that compared to all reported Crime in Denver the
+proprtion of motor-vechile-theft is proportionally much larger than any other crime commited in the Denver
+reigion. 
