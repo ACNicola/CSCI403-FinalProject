@@ -1,6 +1,6 @@
 1. Team Name & Members
 
-Group Name: <insert group name here>
+Group Name: Spine Failure
 
 Group Members: 
 Thomas McInnes (10901477),
@@ -8,6 +8,8 @@ Thomas Dowd (10900152),
 Andrew Nicola (10899694),
 Dmitry Weakly (10915244),
 Hannah Clark (10875959)
+
+
 
 2. Dataset
 
@@ -74,14 +76,61 @@ First 10 Rows (all columns):
         9 |  2021187502 |  2.0211875022999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-04-02            |                      | 2021-04-03    | 3155 W TANFORAN DR        |     0 |     0 | -105.02816345 | 39.63020843 | 4           | 423         | fort-logan                 | t        | f          |            1 | 3132897.99999274 | 1654777.00015192
        10 | 20206007855 | 2.02060078552999e+16 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-06-26            | 2020-06-26           | 2020-06-26    | 1528 BLAKE ST             |     0 |     0 | -104.99991312 | 39.74986963 | 6           | 612         | union-station              | t        | f          |            1 | 3140615.00009964 | 1698407.00006718
 
+Loading Data:
+
+Firstly, some of the rows in the .csv had less columns than they should so we made a python script to ensure the 
+data format is consistent. Next, we used the following command to create the table:
+
+CREATE TABLE incident (
+    objectid INT,
+    incident_id DOUBLE PRECISION,
+    offense_id DOUBLE PRECISION,
+    offense_code VARCHAR(50),
+    offense_code_extension VARCHAR(50),
+    offense_type_id VARCHAR(50),
+    offense_category_id VARCHAR(50),
+    first_occurrence_date DATE,
+    last_occurrence_date DATE,
+    reported_date DATE,
+    incident_address VARCHAR(255),
+    geo_x DOUBLE PRECISION,
+    geo_y DOUBLE PRECISION,
+    geo_lon DOUBLE PRECISION,
+    geo_lat DOUBLE PRECISION,
+    district_id CHAR(1),
+    precinct_id VARCHAR(50),
+    neighborhood_id VARCHAR(50),
+    is_crime BOOLEAN,
+    is_traffic BOOLEAN,
+    victim_count INT,
+    x DOUBLE PRECISION,
+    y DOUBLE PRECISION
+);
+
+For loading the data, we were able to get it working for local DB instances (windows) with: 
+
+\COPY incident FROM 'C:\Users\<user>\Downloads\CLEANED_Denver_Crime.csv' (FORMAT csv, HEADER)
+
+But we weren't able to load directly from a file onto the codd.mines.edu domain as it could not find the file so we
+wrote a separate python script that would iterate through each row of the .csv running the following command:
+
+INSERT INTO incident (
+    objectid, incident_id, offense_id, offense_code, offense_code_extension, offense_type_id,
+    offense_category_id, first_occurrence_date, last_occurrence_date, reported_date, 
+    incident_address, geo_x, geo_y, geo_lon, geo_lat, district_id, precinct_id, 
+    neighborhood_id, is_crime, is_traffic, victim_count, x, y
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+   
 Works Cited:
 
 “Crime.” Open Data Catalog, City and County of Denver, 22 Oct. 2019, opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore. Accessed 13 Nov. 2024.  
 
+
+
 3. Analysis
 
 Analysis Question 1:
-    "What Neigborhood(s) are associated with the highest frequency for non-buisness related robberies?"
+    "What Neigborhood(s) are associated with the highest frequency for non-business related robberies?"
 
 SQL Query of Note:
 
