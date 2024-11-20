@@ -12,30 +12,30 @@ Hannah Clark (10875959)
 2. Dataset
 
 For our dataset, we selected a collection of crime that has occurred in Denver, from disturbing the peace to motor vehicle theft.
-We thought this dataset was interesting because it has the potential to give an insightful look into the crime and safety of a very local area, making it
+We thought that this dataset was interesting because it has the potential to give an insightful look into the crime and safety of a very local area, making it
 relevant to us. The dataset is also fairly simple to understand, since most people know what the crimes within our dataset are, so clarifying the significance of our data
-will be made more simple without having to give very long-winded explanations in our final report.
+will be made simpler without having to give long-winded explanations in our final report.
 
 Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
 
 Columns Descriptions: 
-    objectid: 
-    incident_id:
-    offense_id:
-    offense_code:
-    offense_code_extension:
+    objectid: Unique identifier indicating that a crime incinident has been tracked. 
+    incident_id: Unique identifier to track crime incidents.
+    offense_id: Unique identifer tracking crimes by specific offense.
+    offense_code: Numeric identifier for specific crime types.
+    offense_code_extension: Unspecifed relation to seemingly clarify offense codes.
     offense_type_id: Specific descriptor for incident.
     offense_category_id: General descriptor for incident. 
-    first_occurrence_date:
-    last_occurrence_date:
-    reported_date:
+    first_occurrence_date: Date and time incident was noted to have first occured.
+    last_occurrence_date: Date and time incident was noted to have last occured.
+    reported_date: Date and time when incident was reported.
     incident_address: The address of where the crime occurred
     geo_x: Seeminly unused or depreciated X coordinate.
     geo_y: Seeminly unused or depreciated Y coordinate.
     geo_lon: The longitudinal location of where the crime occurred
     geo_lat: The latitudinal location of where the crime occurred
-    district_id:
-    precinct_id:
+    district_id: Categorical identifier based on district where crime occured.
+    precinct_id: Categorical identifer of police presinct that dealt with incident.
     neighborhood_id: The Identifyer for Neigborhood for the incident.
     is_crime: A Boolean for if it is a crime or not.
     is_traffic: A Boolean for if it is a traffic violation or not.
@@ -74,11 +74,15 @@ First 10 Rows (all columns):
         9 |  2021187502 |  2.0211875022999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-04-02            |                      | 2021-04-03    | 3155 W TANFORAN DR        |     0 |     0 | -105.02816345 | 39.63020843 | 4           | 423         | fort-logan                 | t        | f          |            1 | 3132897.99999274 | 1654777.00015192
        10 | 20206007855 | 2.02060078552999e+16 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-06-26            | 2020-06-26           | 2020-06-26    | 1528 BLAKE ST             |     0 |     0 | -104.99991312 | 39.74986963 | 6           | 612         | union-station              | t        | f          |            1 | 3140615.00009964 | 1698407.00006718
 
+Works Cited:
+
+“Crime.” Open Data Catalog, City and County of Denver, 22 Oct. 2019, opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore. Accessed 13 Nov. 2024.  
 
 3. Analysis
 
 Analysis Question 1:
-    "What Neigborhood(s) are associated with the highest frequency for non-buisness related robberies"
+    "What Neigborhood(s) are associated with the highest frequency for non-buisness related robberies?"
+
 SQL Query of Note:
 
 CREATE TABLE relevant_crimes_rq1 AS
@@ -128,14 +132,16 @@ Relavent Output + Explanation:
  indian-creek    |           31
 (10 rows)
 
-The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise)burglaries historically, This is the
-historical frequency of burglaries. This data can be used to interpret the proprtion and other stats if needed as well.
+The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise) burglaries historically. This is the
+historical frequency of burglaries. This data can be used to interpret the proprtion and other statistics if needed as well. This query's output illustrates which
+neighborhoods have historically experienced the most, highest frequency, of robberies excluding those done on business locations thus answering our research
+question.
 
 
 Analysis Question 2:
     "What are the proprtions of Each Crime?"
 
-Relavent Query:
+SQL Query of Note:
 
 SELECT offense_type_id, COUNT(offense_type_id) * 1.0 / (SELECT COUNT(*) FROM incident) 
     AS proportion 
@@ -145,6 +151,7 @@ SELECT offense_type_id, COUNT(offense_type_id) * 1.0 / (SELECT COUNT(*) FROM inc
     limit 15;
 
 Relavent Query Output:
+
        offense_type_id        |       proportion
 ------------------------------+------------------------
  theft-of-motor-vehicle       | 0.15013302734941430139
@@ -164,6 +171,7 @@ Relavent Query Output:
  aggravated-assault           | 0.01826320501342882722
 (15 rows)
 
-On the above output from the Relavent Query we can see that compared to all reported Crime in Denver the
-proprtion of motor-vechile-theft is proportionally much larger than any other crime commited in the Denver
-reigion. 
+On the above output from the relavent query we can see that compared to all reported crime in Denver the
+proprtion of motor-vechile-theft is proportionally much larger than any other crime committed in the Denver
+reigion. This query's output also lists the proportion of other crimes committed in the Denver area displaying
+the proportional break down of each offense.
