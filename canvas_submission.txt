@@ -19,7 +19,7 @@ will be made simpler without having to give long-winded explanations in our fina
 Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
 
 Columns Descriptions: 
-    objectid: Unique identifier indicating that a crime incinident has been tracked. 
+    objectid: Unique identifier indicating that a crime incident has been tracked. 
     incident_id: Unique identifier to track each incident report.
     offense_id: Unique identifer tracking reported offenses.
     offense_code: Numeric identifier for specific crime types.
@@ -30,8 +30,8 @@ Columns Descriptions:
     last_occurrence_date: Date and time incident was noted to have last occured.
     reported_date: Date and time when incident was reported.
     incident_address: The address of where the crime occurred
-    geo_x: Seeminly unused or depreciated X coordinate.
-    geo_y: Seeminly unused or depreciated Y coordinate.
+    geo_x: Seemingly unused or depreciated X coordinate.
+    geo_y: Seemingly unused or depreciated Y coordinate.
     geo_lon: The longitudinal location of where the crime occurred
     geo_lat: The latitudinal location of where the crime occurred
     district_id: Categorical identifier based on district where crime occured.
@@ -116,7 +116,7 @@ UNION ALL
     LIMIT 5
 );
 
-Relavent Output + Explanation:
+Relevant Output + Explanation:
 
  neighborhood_id | total_crimes
 -----------------+--------------
@@ -132,14 +132,14 @@ Relavent Output + Explanation:
  indian-creek    |           31
 (10 rows)
 
-The above Output shows us the Neigborhoods with the most frequent Non-Commercial robberies/(violent and otherwise) burglaries historically. This is the
+The above output shows us the neigborhoods with the most frequent non-commercial robberies/(violent and otherwise) burglaries historically. This is the
 historical frequency of burglaries. This data can be used to interpret the proprtion and other statistics if needed as well. This query's output illustrates which
 neighborhoods have historically experienced the most, highest frequency, of robberies excluding those done on business locations thus answering our research
-question.
+question. This question is interesting as it allows us to find a correlation, if any, between specific Denver neighborhoods and non-business related robberies.
 
 
 Analysis Question 2:
-    "What are the proprtions of Each Crime?"
+    "What are the proprtions of each crime?"
 
 SQL Query of Note:
 
@@ -171,7 +171,9 @@ Relavent Query Output:
  aggravated-assault           | 0.01826320501342882722
 (15 rows)
 
-On the above output from the relavent query we can see that compared to all reported crime in Denver the
+On the above output from the relevant query, we can see that compared to all reported crime in Denver the
 proprtion of motor-vechile-theft is proportionally much larger than any other crime committed in the Denver
-reigion. This query's output also lists the proportion of other crimes committed in the Denver area displaying
-the proportional break down of each offense.
+region. This query's output also lists the proportion of other crimes committed in the Denver area displaying
+the proportional break down of each offense. This proportional break down directly answers our question.
+This question is interesting because it illustrates the crime offenses that most often happen in the Denver 
+area, an area specifically relevant to us as Colorado students.
