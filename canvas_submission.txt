@@ -19,29 +19,29 @@ will be made more simple without having to give very long-winded explanations in
 Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
 
 Columns Descriptions: 
-    objectid:
+    objectid: 
     incident_id:
     offense_id:
     offense_code:
     offense_code_extension:
-    offense_type_id:
-    offense_category_id:
+    offense_type_id: Specific descriptor for incident.
+    offense_category_id: General descriptor for incident. 
     first_occurrence_date:
     last_occurrence_date:
     reported_date:
     incident_address: The address of where the crime occurred
-    geo_x:
-    geo_y:
+    geo_x: Seeminly unused or depreciated X coordinate.
+    geo_y: Seeminly unused or depreciated Y coordinate.
     geo_lon: The longitudinal location of where the crime occurred
     geo_lat: The latitudinal location of where the crime occurred
     district_id:
     precinct_id:
-    neighborhood_id:
-    is_crime:
-    is_traffic:
+    neighborhood_id: The Identifyer for Neigborhood for the incident.
+    is_crime: A Boolean for if it is a crime or not.
+    is_traffic: A Boolean for if it is a traffic violation or not.
     victim_count: The number of victims of the crime
-    x:
-    y:
+    x: X-Coordniate for incident date.
+    y: Y-Coordniate for incident date.
 
 First 10 Rows (with some columns omitted for better readability):
 
