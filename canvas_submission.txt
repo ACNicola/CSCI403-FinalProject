@@ -20,8 +20,8 @@ Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce
 
 Columns Descriptions: 
     objectid: Unique identifier indicating that a crime incinident has been tracked. 
-    incident_id: Unique identifier to track crime incidents.
-    offense_id: Unique identifer tracking crimes by specific offense.
+    incident_id: Unique identifier to track each incident report.
+    offense_id: Unique identifer tracking reported offenses.
     offense_code: Numeric identifier for specific crime types.
     offense_code_extension: Unspecifed relation to seemingly clarify offense codes.
     offense_type_id: Specific descriptor for incident.
