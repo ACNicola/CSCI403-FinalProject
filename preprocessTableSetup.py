@@ -2,7 +2,6 @@
 
 import getpass
 import pg8000
-import csv
 
 user = input("Username: ")
 secret = getpass.getpass()
@@ -10,7 +9,12 @@ db = pg8000.connect(user=user, password=secret, host='codd.mines.edu', port=5433
 
 cursor = db.cursor()
 
-query = """CREATE TABLE incident (
+# Delete Old tables (incident, full_crime_data) if they exist and add them to a new table
+query = """
+
+DROP TABLE IF EXISTS incident CASCADE;
+
+CREATE TABLE IF NOT EXISTS full_crime_data (
     objectid INT,
     incident_id DOUBLE PRECISION,
     offense_id DOUBLE PRECISION,
@@ -38,20 +42,7 @@ query = """CREATE TABLE incident (
 
 cursor.execute(query)
 
-with open('./CLEANED_Denver_Crime.csv', 'r') as f:
-    reader = csv.reader(f)
-    next(reader)  # Skip the header row
-    query = """
-    INSERT INTO incident (
-        objectid, incident_id, offense_id, offense_code, offense_code_extension, offense_type_id,
-        offense_category_id, first_occurrence_date, last_occurrence_date, reported_date, 
-        incident_address, geo_x, geo_y, geo_lon, geo_lat, district_id, precinct_id, 
-        neighborhood_id, is_crime, is_traffic, victim_count, x, y
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-    """
-    for row in reader:
-        row = [None if col == "" else col for col in row]
-        cursor.execute(query, row)
+# \COPY full_crime_data FROM 'C:\Users\<user>\Downloads\CLEANED_Denver_Crime.csv' (FORMAT csv, HEADER) in terminal
 
 #Assume file is in project directory
 db.commit()
