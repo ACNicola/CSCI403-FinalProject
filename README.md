@@ -28,7 +28,7 @@ Run `preprocess.py` in the same directory as your data download (or change input
 Second: Create Table
 
 ```
-CREATE TABLE incident (
+CREATE TABLE full_crime_data (
     objectid INT,
     incident_id DOUBLE PRECISION,
     offense_id DOUBLE PRECISION,
@@ -61,9 +61,9 @@ Third: Load Data
 
 ```			
 Sub your drive, <user>, path, and file name to this
-\COPY incident FROM 'C:\Users\<user>\Downloads\CLEANED_Denver_Crime.csv' (FORMAT csv, HEADER)
+\COPY full_crime_data FROM 'C:\Users\<user>\Downloads\CLEANED_Denver_Crime.csv' (FORMAT csv, HEADER)
 ```
 
 You should see an ouput: `COPY 396535`
 
-Further verify it worked by running `\d incident` and `SELECT TOP 10 * FROM incident;`
+Further verify it worked by running `\d full_crime_data` and `SELECT TOP 10 * FROM full_crime_data;`
