@@ -1,7 +1,7 @@
 Prior: Download Data, have python/psql installed
 
 
-First: Preprocess Data (some rows were exported without all columns
+First: Preprocess Data (some rows were exported without all columns)
 
 `preprocess.py`
 ```
@@ -66,4 +66,4 @@ Sub your drive, <user>, path, and file name to this
 
 You should see an ouput: `COPY 396535`
 
-Further verify it worked by running `\d incident` and `SELECT TOP 10 * FROM incident`;
+Further verify it worked by running `\d incident` and `SELECT TOP 10 * FROM incident;`

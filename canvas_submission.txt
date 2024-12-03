@@ -1,47 +1,49 @@
 1. Team Name & Members
 
-Group Name: <insert group name here>
+Group Name: Spine Failure
 
 Group Members: 
 Thomas McInnes (10901477),
-Thomas Dowd (CWID),
-Andrew Nicola (CWID),
+Thomas Dowd (10900152),
+Andrew Nicola (10899694),
 Dmitry Weakly (10915244),
-Hannah Clark (CWID)
+Hannah Clark (10875959)
+
+
 
 2. Dataset
 
 For our dataset, we selected a collection of crime that has occurred in Denver, from disturbing the peace to motor vehicle theft.
-We thought this dataset was interesting because it has the potential to give an insightful look into the crime and safety of a very local area, making it
+We thought that this dataset was interesting because it has the potential to give an insightful look into the crime and safety of a very local area, making it
 relevant to us. The dataset is also fairly simple to understand, since most people know what the crimes within our dataset are, so clarifying the significance of our data
-will be made more simple without having to give very long-winded explanations in our final report.
+will be made simpler without having to give long-winded explanations in our final report.
 
 Data source: https://opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore
 
 Columns Descriptions: 
-    objectid:
-    incident_id:
-    offense_id:
-    offense_code:
-    offense_code_extension:
-    offense_type_id:
-    offense_category_id:
-    first_occurrence_date:
-    last_occurrence_date:
-    reported_date:
+    objectid: Unique identifier indicating that a crime incident has been tracked. 
+    incident_id: Unique identifier to track each incident report.
+    offense_id: Unique identifer tracking reported offenses.
+    offense_code: Numeric identifier for specific crime types.
+    offense_code_extension: Unspecifed relation to seemingly clarify offense codes.
+    offense_type_id: Specific descriptor for incident.
+    offense_category_id: General descriptor for incident. 
+    first_occurrence_date: Date and time incident was noted to have first occured.
+    last_occurrence_date: Date and time incident was noted to have last occured.
+    reported_date: Date and time when incident was reported.
     incident_address: The address of where the crime occurred
-    geo_x:
-    geo_y:
+    geo_x: Seemingly unused or depreciated X coordinate.
+    geo_y: Seemingly unused or depreciated Y coordinate.
     geo_lon: The longitudinal location of where the crime occurred
     geo_lat: The latitudinal location of where the crime occurred
-    district_id:
-    precinct_id:
-    neighborhood_id:
-    is_crime:
-    is_traffic:
+    district_id: Categorical identifier based on district where crime occured.
+    precinct_id: Categorical identifer of police presinct that dealt with incident.
+    neighborhood_id: The Identifyer for Neigborhood for the incident.
+    is_crime: A Boolean for if it is a crime or not.
+    is_traffic: A Boolean for if it is a traffic violation or not.
     victim_count: The number of victims of the crime
-    x:
-    y:
+    x: X-Coordniate for incident date.
+    y: Y-Coordniate for incident date.
 
 First 10 Rows (with some columns omitted for better readability):
 
@@ -74,5 +76,153 @@ First 10 Rows (all columns):
         9 |  2021187502 |  2.0211875022999e+15 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2021-04-02            |                      | 2021-04-03    | 3155 W TANFORAN DR        |     0 |     0 | -105.02816345 | 39.63020843 | 4           | 423         | fort-logan                 | t        | f          |            1 | 3132897.99999274 | 1654777.00015192
        10 | 20206007855 | 2.02060078552999e+16 | 2999         | 0                      | criminal-mischief-other | public-disorder     | 2020-06-26            | 2020-06-26           | 2020-06-26    | 1528 BLAKE ST             |     0 |     0 | -104.99991312 | 39.74986963 | 6           | 612         | union-station              | t        | f          |            1 | 3140615.00009964 | 1698407.00006718
 
+Loading Data:
+
+Firstly, some of the rows in the .csv had less columns than they should so we made a python script to ensure the 
+data format is consistent. Next, we used the following command to create the table:
+
+CREATE TABLE incident (
+    objectid INT,
+    incident_id DOUBLE PRECISION,
+    offense_id DOUBLE PRECISION,
+    offense_code VARCHAR(50),
+    offense_code_extension VARCHAR(50),
+    offense_type_id VARCHAR(50),
+    offense_category_id VARCHAR(50),
+    first_occurrence_date DATE,
+    last_occurrence_date DATE,
+    reported_date DATE,
+    incident_address VARCHAR(255),
+    geo_x DOUBLE PRECISION,
+    geo_y DOUBLE PRECISION,
+    geo_lon DOUBLE PRECISION,
+    geo_lat DOUBLE PRECISION,
+    district_id CHAR(1),
+    precinct_id VARCHAR(50),
+    neighborhood_id VARCHAR(50),
+    is_crime BOOLEAN,
+    is_traffic BOOLEAN,
+    victim_count INT,
+    x DOUBLE PRECISION,
+    y DOUBLE PRECISION
+);
+
+For loading the data, we were able to get it working for local DB instances (windows) with: 
+
+\COPY incident FROM 'C:\Users\<user>\Downloads\CLEANED_Denver_Crime.csv' (FORMAT csv, HEADER)
+
+But we weren't able to load directly from a file onto the codd.mines.edu domain as it could not find the file so we
+wrote a separate python script that would iterate through each row of the .csv running the following command:
+
+INSERT INTO incident (
+    objectid, incident_id, offense_id, offense_code, offense_code_extension, offense_type_id,
+    offense_category_id, first_occurrence_date, last_occurrence_date, reported_date, 
+    incident_address, geo_x, geo_y, geo_lon, geo_lat, district_id, precinct_id, 
+    neighborhood_id, is_crime, is_traffic, victim_count, x, y
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+   
+Works Cited:
+
+“Crime.” Open Data Catalog, City and County of Denver, 22 Oct. 2019, opendata-geospatialdenver.hub.arcgis.com/datasets/1e080d3ce2ae4e2698745a0d02345d4a_324/explore. Accessed 13 Nov. 2024.  
+
+
 
 3. Analysis
+
+Analysis Question 1:
+    "What Neigborhood(s) are associated with the highest frequency for non-business related robberies?"
+
+SQL Query of Note:
+
+CREATE TABLE relevant_crimes_rq1 AS
+SELECT *
+FROM incident
+WHERE  
+      offense_type_id ILIKE 'burglary-residence-%' 
+   OR offense_type_id ILIKE 'robbery-street-%' 
+   OR offense_type_id ILIKE 'robbery-residence' 
+   OR offense_type_id ILIKE 'burglary-other'
+   AND neighborhood_id IS NOT NULL
+   AND neighborhood_id != '';
+
+( -- Top Burgaled Neigborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes DESC
+    LIMIT 5
+)
+UNION ALL
+( -- Bottom Burgaled Neighborhoods
+    SELECT 
+        neighborhood_id,
+        COUNT(*) AS total_crimes
+    FROM relevant_crimes_rq1
+    GROUP BY neighborhood_id
+    ORDER BY total_crimes ASC
+    LIMIT 5
+);
+
+Relevant Output + Explanation:
+
+ neighborhood_id | total_crimes
+-----------------+--------------
+ five-points     |          848
+ central-park    |          664
+ capitol-hill    |          575
+ west-colfax     |          442
+ east-colfax     |          430
+                 |           10
+ auraria         |           16
+ wellshire       |           19
+ sun-valley      |           24
+ indian-creek    |           31
+(10 rows)
+
+The above output shows us the neigborhoods with the most frequent non-commercial robberies/(violent and otherwise) burglaries historically. This is the
+historical frequency of burglaries. This data can be used to interpret the proprtion and other statistics if needed as well. This query's output illustrates which
+neighborhoods have historically experienced the most, highest frequency, of robberies excluding those done on business locations thus answering our research
+question. This question is interesting as it allows us to find a correlation, if any, between specific Denver neighborhoods and non-business related robberies.
+
+
+Analysis Question 2:
+    "What are the proprtions of each crime?"
+
+SQL Query of Note:
+
+SELECT offense_type_id, COUNT(offense_type_id) * 1.0 / (SELECT COUNT(*) FROM incident) 
+    AS proportion 
+    FROM incident 
+    GROUP BY offense_type_id 
+    ORDER BY proportion DESC
+    limit 15;
+
+Relavent Query Output:
+
+       offense_type_id        |       proportion
+------------------------------+------------------------
+ theft-of-motor-vehicle       | 0.15013302734941430139
+ theft-items-from-vehicle     | 0.10307539057081972588
+ criminal-mischief-mtr-veh    | 0.07027626817304903729
+ theft-parts-from-vehicle     | 0.06518214029026441550
+ theft-other                  | 0.06001740073385703658
+ criminal-mischief-other      | 0.04191307198607941291
+ criminal-trespassing         | 0.03705599757902833293
+ assault-simple               | 0.03692990530470198091
+ theft-shoplift               | 0.03450893363763602204
+ theft-bicycle                | 0.02396257581297993872
+ burglary-business-by-force   | 0.02337498581461913829
+ weapon-unlawful-discharge-of | 0.02161725951050979107
+ theft-from-bldg              | 0.02157186629175230434
+ burglary-residence-no-force  | 0.02155925706431966913
+ aggravated-assault           | 0.01826320501342882722
+(15 rows)
+
+On the above output from the relevant query, we can see that compared to all reported crime in Denver the
+proprtion of motor-vechile-theft is proportionally much larger than any other crime committed in the Denver
+region. This query's output also lists the proportion of other crimes committed in the Denver area displaying
+the proportional break down of each offense. This proportional break down directly answers our question.
+This question is interesting because it illustrates the crime offenses that most often happen in the Denver 
+area, an area specifically relevant to us as Colorado students.
