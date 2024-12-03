@@ -3,29 +3,32 @@ import pg8000
 
 app = Flask(__name__, template_folder= 'src')
 
-global signedIn
 global db
+global signedIn 
 signedIn = False # Default
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+
     if request.method == 'POST':
+        global signedIn
+        global db
         username = request.form.get('username')
         password = request.form.get('password')
         try:
             db = pg8000.connect(user=username, password=password, host='codd.mines.edu', port=5433, database='csci403')
-            
+            signedIn = True
+            return redirect(url_for('form'))
         except Exception as e: 
-            return redirect(url_for('error'))
             signedIn = False
-        signedIn = True
-        return redirect(url_for('form'))
+            return redirect(url_for('error'))
+        
     return render_template('index.html')
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():
-    if(not signedIn):
+    if(signedIn == False):
         return redirect(url_for('home'))
     if request.method == 'POST':
         return redirect(url_for(results))
