@@ -81,7 +81,7 @@ CREATE TABLE incident (
     reported_date DATE,
     incident_address VARCHAR(255),
     is_traffic BOOLEAN,
-    victim_count INT,
+    victim_count INT
 );
 CREATE TABLE offense (
     offense_id DOUBLE PRECISION,
@@ -90,7 +90,7 @@ CREATE TABLE offense (
     offense_type_id VARCHAR(50),
     offense_category_id VARCHAR(50),
     first_occurrence_date DATE,
-    last_occurrence_date DATE,
+    last_occurrence_date DATE
 );
 CREATE TABLE location (
     geo_lon DOUBLE PRECISION,
