@@ -99,12 +99,12 @@ CREATE TABLE location (
     precinct_id VARCHAR(50),
     neighborhood_id VARCHAR(50),
     x DOUBLE PRECISION,
-    y DOUBLE PRECISION,
-    location_id SERIAL
+    y DOUBLE PRECISION
 );
 ```
 * Not all columns are minimized, but this works to get it all loaded
 * geo_x and geo_y seem to be empty, while x and y seem to actually hold the values we expect (I'm too lazy to change that right now)
+* We're not quite done with the location table yet, continue reading further
 
 Third: Load Data
 
@@ -116,7 +116,14 @@ Sub your drive, <user>, path, and file name to this
 \COPY location FROM 'C:\Users\<user>\Downloads\location.csv' (FORMAT csv, HEADER)
 ```
 
-You should see ouput: `COPY 396535` for the full_crime_data table.
+You should see ouput: `COPY 396535` for each of the tables.
+
+Fourth: Add ID Column to Location Table
+
+```
+ALTER TABLE location
+ADD location_id SERIAL;
+```
 
 Further verify it worked by running `\d full_crime_data` and `SELECT TOP 10 * FROM full_crime_data;`
-Test to ensure the SERIAL type works for location by running `\d location` and `SELECT TOP 10 * FROM location`
+Test to ensure the SERIAL type works for location by running `\d location` and `SELECT * FROM location WHERE location_id < 11`
