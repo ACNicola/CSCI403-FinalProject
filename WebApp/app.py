@@ -68,57 +68,42 @@ def form():
     precinct_id = request.form.get('precinct_id')
     district_id = request.form.get('district_id')
     neighborhood_id = request.form.get('neighborhood_id')
-    group_by = request.form.getlist('group_by[]')
 
     # Construct the query
     query = """
         SELECT 
-            *
+            fcd.incident_id, fcd.offense_id, fcd.incident_address, fcd.reported_date, 
+            fcd.victim_count
         FROM 
-            incident i
-        LEFT JOIN offense o ON i.objectid = o.offense_id
-        LEFT JOIN location l ON i.objectid = l.id
+            full_crime_data fcd
     """
     conditions = []
 
     # Add conditions based on user input
     if incident_id:
-        conditions.append(f"i.objectid = {incident_id}")
+        conditions.append(f"fcd.incident_id = {incident_id}")
     if reported_date:
-        conditions.append(f"i.reported_date = '{reported_date}'")
+        conditions.append(f"fcd.reported_date = '{reported_date}'")
     if incident_address:
-        conditions.append(f"i.incident_address LIKE '%{incident_address}%'")
+        conditions.append(f"fcd.incident_address LIKE '%{incident_address}%'")
     if victim_count:
-        conditions.append(f"i.victim_count = {victim_count}")
+        conditions.append(f"fcd.victim_count = {victim_count}")
     if is_traffic:
-        # Update to use BOOLEAN value TRUE or FALSE for 'is_traffic'
-        conditions.append(f"i.is_traffic = {'TRUE' if is_traffic == '1' else 'FALSE'}")
+        conditions.append(f"fcd.is_traffic = {'TRUE' if is_traffic == '1' else 'FALSE'}")
     if offense_id:
-        conditions.append(f"o.offense_id = {offense_id}")
+        conditions.append(f"fcd.offense_id = {offense_id}")
     if offense_code:
-        conditions.append(f"o.offense_code_extension LIKE '%{offense_code}%'")
+        conditions.append(f"fcd.offense_code_extension LIKE '%{offense_code}%'")
     if precinct_id:
-        conditions.append(f"l.precinct_id LIKE '%{precinct_id}%'")
+        conditions.append(f"fcd.precinct_id LIKE '%{precinct_id}%'")
     if district_id:
-        conditions.append(f"l.district_id = '{district_id}'")
+        conditions.append(f"fcd.district_id = '{district_id}'")
     if neighborhood_id:
-        conditions.append(f"l.neighborhood_id LIKE '%{neighborhood_id}%'")
+        conditions.append(f"fcd.neighborhood_id LIKE '%{neighborhood_id}%'")
 
     # Append WHERE clause if there are conditions
     if conditions:
         query += " WHERE " + " AND ".join(conditions)
-
-    # Add GROUP BY clause if selected
-    if group_by:
-        query += " GROUP BY " + ", ".join(group_by)
-
-    # Append WHERE clause if there are conditions
-    if conditions:
-        query += " WHERE " + " AND ".join(conditions)
-
-    # Add GROUP BY clause if selected
-    if group_by:
-        query += " GROUP BY " + ", ".join(group_by)
 
     logging.debug(f"Constructed Query: {query}")
 
