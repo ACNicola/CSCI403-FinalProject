@@ -91,7 +91,8 @@ def form():
     if victim_count:
         conditions.append(f"i.victim_count = {victim_count}")
     if is_traffic:
-        conditions.append(f"i.is_traffic = {is_traffic}")
+        # Update to use BOOLEAN value TRUE or FALSE for 'is_traffic'
+        conditions.append(f"i.is_traffic = {'TRUE' if is_traffic == '1' else 'FALSE'}")
     if offense_id:
         conditions.append(f"o.offense_id = {offense_id}")
     if offense_code:
@@ -102,6 +103,14 @@ def form():
         conditions.append(f"l.district_id = '{district_id}'")
     if neighborhood_id:
         conditions.append(f"l.neighborhood_id LIKE '%{neighborhood_id}%'")
+
+    # Append WHERE clause if there are conditions
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
+
+    # Add GROUP BY clause if selected
+    if group_by:
+        query += " GROUP BY " + ", ".join(group_by)
 
     # Append WHERE clause if there are conditions
     if conditions:
