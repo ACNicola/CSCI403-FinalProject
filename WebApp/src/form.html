@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Database</title>
+    <link rel="stylesheet" href="styles.css">  <!-- Optional: Include a CSS file for styling -->
+</head>
+<body>
+    <h1>Database Query Form</h1>
+    <form action="/results" method="POST">
+        <fieldset>
+            <legend>Incident Information</legend>
+            
+            <label for="incident_id">Incident ID:</label>
+            <input type="text" id="incident_id" name="incident_id">
+            <br>
+
+            <label for="reported_date">Reported Date:</label>
+            <input type="date" id="reported_date" name="reported_date">
+            <br>
+
+            <label for="incident_address">Incident Address:</label>
+            <input type="text" id="incident_address" name="incident_address">
+            <br>
+
+            <label for="victim_count">Victim Count:</label>
+            <input type="number" id="victim_count" name="victim_count">
+            <br>
+
+            <label for="is_traffic">Is Traffic Incident:</label>
+            <select id="is_traffic" name="is_traffic">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Offense Information</legend>
+            
+            <label for="offense_id">Offense ID:</label>
+            <input type="text" id="offense_id" name="offense_id">
+            <br>
+
+            <label for="offense_code">Offense Code:</label>
+            <input type="text" id="offense_code" name="offense_code">
+            <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Location Information</legend>
+            
+            <label for="precinct_id">Precinct ID:</label>
+            <input type="text" id="precinct_id" name="precinct_id">
+            <br>
+
+            <label for="district_id">District ID:</label>
+            <input type="text" id="district_id" name="district_id">
+            <br>
+
+            <label for="neighborhood_id">Neighborhood ID:</label>
+            <input type="text" id="neighborhood_id" name="neighborhood_id">
+            <br>
+
+            <label for="geo_lat">Latitude:</label>
+            <input type="text" id="geo_lat" name="geo_lat">
+            <br>
+
+            <label for="geo_lon">Longitude:</label>
+            <input type="text" id="geo_lon" name="geo_lon">
+            <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Group By Options</legend>
+
+            <label for="group_by_offense">Group by Offense Code:</label>
+            <input type="checkbox" id="group_by_offense" name="group_by[]" value="offense_code">
+            <br>
+
+            <label for="group_by_location">Group by Precinct ID:</label>
+            <input type="checkbox" id="group_by_location" name="group_by[]" value="precinct_id">
+            <br>
+
+            <label for="group_by_victim_count">Group by Victim Count:</label>
+            <input type="checkbox" id="group_by_victim_count" name="group_by[]" value="victim_count">
+            <br>
+
+            <label for="group_by_reported_date">Group by Reported Date:</label>
+            <input type="checkbox" id="group_by_reported_date" name="group_by[]" value="reported_date">
+            <br>
+        </fieldset>
+
+        <button type="submit">Submit Query</button>
+    </form>
+</body>
+</html>

@@ -34,7 +34,7 @@ def form():
         return redirect(url_for(results))
     return render_template('form.html')
 
-@app.route('/results', methods=['GET'])
+@app.route('/results', methods=['POST'])
 def results():
     return render_template('results.html')
 
